@@ -48,7 +48,7 @@
                             "date": currentDate.getDate(),
                             "dayTxt": number,
                             "day": currentDate.getDay()
-						})
+						});
 					}
 				});
 
