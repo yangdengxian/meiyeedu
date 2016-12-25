@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+   <head>
+        <title>用户管理</title>
+
+        <meta charset="utf-8">
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        
+        <script type="text/javascript" src="/javascripts/jquery-1.9.1.min.js"></script>
+
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/bootstrap/css/font-awesome.css">
+
+        <!-- css -->
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        
+        <style type="text/css">
+          #line-chart {
+              height:300px;
+              width:800px;
+              margin: 0px auto;
+              margin-top: 1em;
+          }
+          .brand { font-family: georgia, serif; }
+          .brand .first {
+              color: #ccc;
+              font-style: italic;
+          }
+          .brand .second {
+              color: #fff;
+              font-weight: bold;
+          }
+      </style>
+
+   </head>
+   
+   <body class=""> 
+  
+    <div class="navbar">
+        <div class="navbar-inner">
+                <ul class="nav pull-right">
+                    
+                    <li><a href="#" class="hidden-phone visible-tablet visible-desktop" role="button">设置</a></li>
+                    <li id="fat-menu" class="dropdown">
+                        <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-user"></i> 张三
+                            <i class="icon-caret-down"></i>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" href="#">我的账号</a></li>
+                            <li class="divider"></li>
+                            <li><a tabindex="-1" class="visible-phone" href="#">设置</a></li>
+                            <li class="divider visible-phone"></li>
+                            <li><a tabindex="-1" href="sign-in.html">登出</a></li>
+                        </ul>
+                    </li>
+                    
+                </ul>
+                <a class="brand" href="/"><span class="second">我的blog管理</span></a>
+
+        </div>
+    </div>
+    
+
+    <div class="sidebar-nav">
+        
+        <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>工作区</a>
+        <ul id="dashboard-menu" class="nav nav-list collapse in">
+            <li><a href="/">首页</a></li>
+            <li class="active"><a href="/users">用户管理</a></li>
+            <li ><a href="user.html">充值管理</a></li>
+            <li ><a href="media.html">素材</a></li>
+        </ul>
+
+        <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>我的账号<span class="label label-info">+3</span></a>
+        <ul id="accounts-menu" class="nav nav-list collapse">
+            <li ><a href="#">修改信息</a></li>
+            <li ><a href="#">重置密码</a></li>
+        </ul>
+
+        <a href="#error-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-exclamation-sign"></i>导航一<i class="icon-chevron-up"></i></a>
+        <ul id="error-menu" class="nav nav-list collapse">
+            <li ><a href="#">403 page</a></li>
+            <li ><a href="#">404 page</a></li>
+            <li ><a href="#">500 page</a></li>
+            <li ><a href="#">503 page</a></li>
+        </ul>
+
+        <a href="#legal-menu" class="nav-header" data-toggle="collapse"><i class="icon-legal"></i>导航二</a>
+        <ul id="legal-menu" class="nav nav-list collapse">
+            <li ><a href="#">文档</a></li>
+            <li ><a href="#">团队成员</a></li>
+        </ul>
+
+        <a href="/" class="nav-header" ><i class="icon-question-sign"></i>帮助</a>
+        <a href="/" class="nav-header" ><i class="icon-comment"></i>反馈</a>
+    </div>
+        
+    <div class="content">
+        
+        <div class="header">
+            <div class="stats">
+            <p class="stat"><span class="number">53</span>标签</p>
+            <p class="stat"><span class="number">27</span>任务</p>
+            <p class="stat"><span class="number">15</span>待处理</p>
+        </div>
+
+        <h1 class="page-title">用户管理</h1>
+        </div>
+            <ul class="breadcrumb">
+            <li><a href="/">首页</a> <span class="divider">/</span></li>
+            <li class="active">用户列表</li>
+        </ul>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                    
+                <div class="btn-toolbar">
+                    <button class="btn btn-primary"><i class="icon-plus"></i> 新建</button>
+                    <div class="btn-group">
+                    </div>
+                </div>
+
+                <div class="well">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>姓名</th>
+                          <th>登录名</th>
+                          <th style="width: 26px;"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                          <!-- 输出内容 -->
+                          <% for(var i=0; i<user_arr.length; i++) {%>
+                            <tr>
+                                <td><%=user_arr[i].id %></td>
+                                <td><%=user_arr[i].realname %></td>
+                                <td><%=user_arr[i].username %></td>
+                                <td>
+                                    <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                                </td>
+                            </tr>
+                        <% } %>
+                        
+                      </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <ul>
+                        <li><a href="#">Prev</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">Next</a></li>
+                    </ul>
+                </div>
+
+                <!-- 删除确认框 -->
+                <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">确定删除</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>确定删除用户?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                        <button class="btn btn-danger" data-dismiss="modal">删除</button>
+                    </div>
+                </div>
+                
+
+                <footer>
+                    <hr>
+                    <!-- Purchase a site license to remove this link from the footer: http://www.portnine.com/bootstrap-themes -->
+                    <p class="pull-right"><a href="/" target="_blank">我的blog</a> by <a href="/" target="_blank">bootstrap</a></p>
+                    <p>&copy; 2016 <a href="#" target="_blank">南京</a></p>
+                </footer>
+            </div>
+    </div>
+
+  </body>
+</html>
