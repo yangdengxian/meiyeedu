@@ -1,7 +1,7 @@
 
 var express = require('express');
 var router = express.Router();
-var userDao = require('../dao/userDao');
+var userDao = require('../dao/users/userDao');
 /* GET users listing. 
 *  
 *  app.js 中注册路由配置代码 app.use('/users', users);
