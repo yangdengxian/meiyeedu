@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	h1= title
+	mixin users(users)
+		fieldset
+		legend Welcome to #{title}
+		table.mytable
+			th ID
+			th username
+			th password
+			th realname
+				each user in users
+					tr	
+						td= user.id
+						td #{user.login_name}
+						td 
+							a(href='/delete/#{user.id}', class='btn btn-primary') Delete
+							a(href='/update/#{user.id}', class='btn btn-primary') Update
+		a(href='/create', class='btn btn-primary') Add a User
+					
+	- users = user
+	mixin users(users)

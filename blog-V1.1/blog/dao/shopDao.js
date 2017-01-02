@@ -3,7 +3,6 @@
 var mysql = require('mysql');
 var $conf = require('../conf/db');
 var $util = require('../util/util');
-var $sql = require('./shopSqlMapping');
 
 // 使用连接池，提升性能
 var pool  = mysql.createPool($util.extend({}, $conf.mysql));
@@ -21,11 +20,35 @@ var jsonWrite = function (res, ret) {
 };
 
 module.exports = {
+    response: function(res,obj,jsonp) {
+        var retCode = {
+            SUCCESS: 1,
+            ERROR: -1
+        };
+
+        var result = {};
+
+        if (res.statusCode == 200) {
+            result.data = obj;
+            result.retCode = retCode.SUCCESS;
+        } else {
+            result = obj;
+            result.retCode = retCode.ERROR;
+        }
+
+        result.status = res.statusCode;
+
+        if (jsonp) {
+            return res.send(jsonp + "(" + JSON.stringfy(result) + ")");
+        } else {
+            return res.json(result);
+        }
+    },
     add: function (req, res, next) {
         pool.getConnection(function(err, connection) {
             // 获取前台页面传过来的参数
             var param = req.query || req.params;
-
+            var $sql = $util.getSqlObj(param.tableName);
             // 建立连接，向表中插入值
             connection.query($sql.insert, [param.name, param.tel , param.address], function(err, result) {
                 if(result) {
@@ -49,12 +72,14 @@ module.exports = {
         // delete by Id
         pool.getConnection(function(err, connection) {
             var id = +req.query.id;
+            var $sql = $util.getSqlObj(req.query.tableName);
             connection.query($sql.delete, id, function(err, result) {
                 if(result.affectedRows > 0) {
-                    result = {
-                        code: 200,
-                        msg:'删除成功'
-                    };
+                    // result = {
+                    //     code: 200,
+                    //     msg:'删除成功'
+                    // };
+                    res.redirect('/shops');
                 } else {
                     result = void 0;
                 }
@@ -73,6 +98,7 @@ module.exports = {
         }
 
         pool.getConnection(function(err, connection) {
+            var $sql = $util.getSqlObj(param.tableName);
             connection.query($sql.update, [+param.id,param.name, param.tel, param.address], function(err, result) {
                 // 使用页面进行跳转提示
                 if(result.affectedRows > 0) {
@@ -94,24 +120,34 @@ module.exports = {
     queryById: function (req, res, next) {
         var id = +req.query.id; // 为了拼凑正确的sql语句，这里要转下整数
         pool.getConnection(function(err, connection) {
+            var $sql = $util.getSqlObj(req.query.tableName);
             connection.query($sql.queryById, id, function(err, result) {
-                jsonWrite(res, result);
                 connection.release();
-
+                $util.setHeader(res);
+                res.send(result);
+            });
+        });
+    },
+    //根据sql语句查询
+    querySql: function (req, res, next) {
+        var sql = req.query.sql; // 为了拼凑正确的sql语句，这里要转下整数
+        pool.getConnection(function(err, connection) {
+            connection.query(sql,function(err, result) {
+                connection.release();
+                $util.setHeader(res);
+                res.send(result);
             });
         });
     },
     queryAll: function (req, res, next) {
         pool.getConnection(function(err, connection) {
+            var $sql = $util.getSqlObj(req.query.tableName);
             connection.query($sql.queryAll, function(err, result) {
-                var shopInfo = [];
-                // jsonWrite(res, result);
-                for(var i = 0 ; i < result.length ; i++){
-                    shopInfo.push({'id':result[i]["id"], 'name': result[i]["name"] , 'tel' : result[i]["tel"] ,'address': result[i]["address"]});
-                }
                 //对应shopIndex.html
-                res.render('shopIndex', { content: '您当前现在在商店主页！' ,shopInfo:shopInfo});
+                // res.render('shopIndex', { content: '您当前现在在商店主页！' ,shopInfo:result});
                 connection.release();
+                $util.setHeader(res);
+                res.send(result);
             });
         });
     }
