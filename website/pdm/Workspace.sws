@@ -5,7 +5,7 @@
 <Workspace>
 	<Local Expanded="Yes">
 		<Model ID="{AB35CCDB-F89F-42CB-BC09-2AFB643F1B67}" Loaded="No" Name="PhysicalDataModel_1" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="PhysicalDataModel_1.pdm"/>
-		<Model Expanded="Yes" ID="{1776CF08-355D-472C-AD7D-12E8377BBC4E}" Loaded="No" Name="meiyedu" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="meiyedu.pdm"/>
+		<Model Expanded="Yes" ID="{1776CF08-355D-472C-AD7D-12E8377BBC4E}" Name="meiyedu" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="meiyedu1222.pdm"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>

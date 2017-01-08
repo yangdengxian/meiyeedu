@@ -16,26 +16,72 @@ module.exports = {
         }
         return target;
     },
-    getSqlObj: function(tableName) {
-        var sql = {};
+    getInfoObj: function(tableName) {
+        var sql = {},redirectPage = "",conent="";
+        var obj = {};
         switch (tableName) {
             case "shop":
                 sql = $sql;
+                redirectPage = "shopIndex";
+                conent = "您当前现在在商店主页！";
                 break;
             case "peritem":
                 sql = $sqlPeritem;
+                redirectPage = "peritem";
+                conent = "您当前现在在优惠套餐主页！";
                 break;
             case "preferinfo":
                 sql = $sqlPreferinfo;
+                redirectPage = "preferinfo";
+                conent = "您当前现在在优惠时刻主页！";
                 break;
             case "personyy":
                 sql = $sqlPersonyy;
+                redirectPage = "personyy";
+                conent = "您当前现在在预约信息主页！";
                 break;
             default:
                 sql = $sql;
+                redirectPage = "shopIndex";
+                conent = "您当前现在在商店主页！";
                 break;
         }
-        return sql;
+        obj.sql = sql;
+        obj.redirectPage = redirectPage;
+        obj.conent = conent;
+        return obj;
+    },
+    dateFormat: function(currentDate) {
+        var date = new Date(currentDate);
+        var fmt = "yyyy-MM-dd";
+        var o = {
+            "M+": date.getMonth() + 1, //月份 
+            "d+": date.getDate(), //日 
+            "h+": date.getHours(), //小时 
+            "m+": date.getMinutes(), //分 
+            "s+": date.getSeconds(), //秒 
+            "q+": Math.floor((date.getMonth() + 3) / 3), //季度 
+            "S": date.getMilliseconds() //毫秒 
+        };
+        if (/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(fmt)) { 
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+        }
+        
+        return fmt;
+    },
+    getDataArray: function(dataObj) {
+        var paramsArray = [];
+        for (var key in dataObj) {
+            if (dataObj.hasOwnProperty(key)) {
+                paramsArray.push(dataObj[key]);              
+            }
+        }
+        return paramsArray;
     },
     //解决跨域问题
     setHeader: function(response) {

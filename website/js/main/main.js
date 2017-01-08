@@ -14,6 +14,8 @@ preferential.controller('preferentialCtrl', function ($http, $scope, $location) 
 
     var currentDate = new Date();
 
+    var sqlShop = "select * from shop";
+
     $scope.selectIndex = -1;
     $scope.preferential = {};
     $scope.perItems = [];
@@ -21,6 +23,7 @@ preferential.controller('preferentialCtrl', function ($http, $scope, $location) 
     $scope.selectItemData = [];
     $scope.selectPerItems = [];
     $scope.lastDay = [];
+    $scope.dataUrl = "http://127.0.0.1:3000/shops";
 
     $scope.selectDate = function (year, month, date, day, selectIndex) {
         //alert(month);
@@ -51,7 +54,6 @@ preferential.controller('preferentialCtrl', function ($http, $scope, $location) 
 
         $http.get("pref", {
             params: {
-                action: "daycount",
                 id: id,
                 date: currentDate.getTime()
             }
@@ -157,8 +159,8 @@ preferential.controller('preferentialCtrl', function ($http, $scope, $location) 
 
     }
 
-    $http.get("shop", {params: {action: "geta", id: id}}).success(function (response) {
-        $scope.shop = response.data;
+    $http.get($scope.dataUrl, {params: {sql: sqlShop}}).success(function (result) {
+        $scope.shop = result;
         shareData.title = $scope.shop.name + "限时秒杀";
         //descContent = shareTitle;
 
@@ -189,19 +191,17 @@ preferential.controller('preferentialCtrl', function ($http, $scope, $location) 
     //$scope.preferential = {project0: ["", 0, 0, 0], project1: ["", 0, 0, 0], project2: ["", 0, 0, 0], project3: ["", 0, 0, 0]};
 
     $scope.getData = function () {
-        $http.get("pref", {params: {action: "geta", id: id}}).success(function (reponse) {
+        $http.get($scope.dataUrl + "/queryById", {params: {id: id,tableName:"preferinfo"}}).success(function (result) {
             //alert(reponse.status.massage);
-            if (reponse.data == undefined || reponse.data == null) {
-
-            } else {
-                $scope.preferential = reponse.data;
+            if (result.length == 1) {
+                $scope.preferential = result[0];
 
                 $scope.lastDay = [];
 
 
-                var date = new Date(reponse.time);
+                var date = new Date();
 
-                var cuDay = new Date(reponse.time);
+                var cuDay = new Date();
 
 
 
@@ -218,10 +218,8 @@ preferential.controller('preferentialCtrl', function ($http, $scope, $location) 
                                 "day": date.getDay()
                             });
                             kk = kk + 1;
-                            //alert(lastDay[i].year+":"+lastDay[i].month+":"+lastDay[i].date+":"+lastDay[i].day);
                         }
                         date.setDate(date.getDate() + 1);
-
 
                     }
                 } else {
@@ -235,21 +233,23 @@ preferential.controller('preferentialCtrl', function ($http, $scope, $location) 
                             "day": date.getDay()
                         });
 
-                        //alert(lastDay[i].year+":"+lastDay[i].month+":"+lastDay[i].date+":"+lastDay[i].day);
                         date.setDate(date.getDate() + 1);
                     }
                 }
 
 
-                $http.get("perItem", {params: {action: "get", id: $scope.preferential.id}}).success(function (reponse) {
-                    $scope.perItems = reponse.data;
-                    for (var i = 0; i < $scope.perItems.length; i++) {
-                        $scope.staticPerItemsCount.push($scope.perItems[i].count);
-                    }
+                $http.get($scope.dataUrl + "/querySql", {
+                        params: {
+                            sql: "select * from peritem where preferid = " + $scope.preferential.id
+                        }
+                    }).success(function (result) {
+                        $scope.perItems = result;
+                        for (var i = 0; i < $scope.perItems.length; i++) {
+                            $scope.staticPerItemsCount.push($scope.perItems[i].count);
+                        }
 
-                    //$scope.staticPerItemsCount = angular.copy($scope.perItems);
-                    $scope.selectDate(cuDay.getFullYear(), cuDay.getMonth(), cuDay.getDate(), cuDay.getDay(), 0);
-                });
+                        $scope.selectDate(cuDay.getFullYear(), cuDay.getMonth(), cuDay.getDate(), cuDay.getDay(), 0);
+                    });
 
 
             }
@@ -257,6 +257,4 @@ preferential.controller('preferentialCtrl', function ($http, $scope, $location) 
     }
     $scope.getData();
 
-
-    //console.log(lastDay.toString());
 });

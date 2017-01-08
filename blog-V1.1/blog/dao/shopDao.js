@@ -48,31 +48,40 @@ module.exports = {
         pool.getConnection(function(err, connection) {
             // 获取前台页面传过来的参数
             var param = req.query || req.params;
-            var $sql = $util.getSqlObj(param.tableName);
-            // 建立连接，向表中插入值
-            connection.query($sql.insert, [param.name, param.tel , param.address], function(err, result) {
-                if(result) {
-                    result = {
-                        code: 200,
-                        msg:'增加成功'
-                    };    
-                }
+            var obj = $util.getInfoObj(req.query.tableName);
+            var $sql = obj["sql"]; 
+            var dataArray =  JSON.parse(param.json);
+            var count = 0;
+            dataArray.forEach(function(element) {
+                // 建立连接，向表中插入值
+                connection.query($sql.insert, $util.getDataArray(element), function(err, result) {
+                    $util.setHeader(res);
+                    
+                    if(result) {
+                        count++;
+                        result = {
+                            code: 200,
+                            msg:'增加成功'
+                        };    
+                    }
 
-                console.error(err);
+                    console.error(err);
 
-                // 以json形式，把操作结果返回给前台页面
-                jsonWrite(res, result);
-
-                // 释放连接 
-                connection.release();
-            });
+                    if (count == dataArray.length) {
+                        res.send(result);
+                    }                  
+                });
+            }, this);   
+            // 释放连接 
+            connection.release();
         });
     },
     delete: function (req, res, next) {
         // delete by Id
         pool.getConnection(function(err, connection) {
             var id = +req.query.id;
-            var $sql = $util.getSqlObj(req.query.tableName);
+            var obj = $util.getInfoObj(req.query.tableName);
+            var $sql = obj["sql"];
             connection.query($sql.delete, id, function(err, result) {
                 if(result.affectedRows > 0) {
                     // result = {
@@ -98,7 +107,8 @@ module.exports = {
         }
 
         pool.getConnection(function(err, connection) {
-            var $sql = $util.getSqlObj(param.tableName);
+            var obj = $util.getInfoObj(req.query.tableName);
+            var $sql = obj["sql"];
             connection.query($sql.update, [+param.id,param.name, param.tel, param.address], function(err, result) {
                 // 使用页面进行跳转提示
                 if(result.affectedRows > 0) {
@@ -120,7 +130,8 @@ module.exports = {
     queryById: function (req, res, next) {
         var id = +req.query.id; // 为了拼凑正确的sql语句，这里要转下整数
         pool.getConnection(function(err, connection) {
-            var $sql = $util.getSqlObj(req.query.tableName);
+            var obj = $util.getInfoObj(req.query.tableName);
+            var $sql = obj["sql"];
             connection.query($sql.queryById, id, function(err, result) {
                 connection.release();
                 $util.setHeader(res);
@@ -130,24 +141,58 @@ module.exports = {
     },
     //根据sql语句查询
     querySql: function (req, res, next) {
-        var sql = req.query.sql; // 为了拼凑正确的sql语句，这里要转下整数
+        var sql = req.query.sql; 
         pool.getConnection(function(err, connection) {
             connection.query(sql,function(err, result) {
                 connection.release();
-                $util.setHeader(res);
-                res.send(result);
+                //前端查询使用
+                if (!req.query.tableName) {
+                    $util.setHeader(res);
+                    res.send(result);
+                } else {    //服务端查询使用
+                    var obj = $util.getInfoObj(req.query.tableName);
+                    if (req.query.tableName == "personyy") {
+                        var resNew = [];
+                        result.forEach(function(obj) {
+                            for (var key in obj) {
+                                if (obj.hasOwnProperty(key)) {
+                                    if (key == "date") {
+                                        obj[key] = $util.dateFormat(obj[key]);
+                                    }                         
+                                }
+                            }
+                            resNew.push(obj);
+                        }, this);
+                        res.render(obj['redirectPage'], { content: obj['content'] ,shopInfo:resNew});
+                    }
+                }
             });
         });
     },
     queryAll: function (req, res, next) {
         pool.getConnection(function(err, connection) {
-            var $sql = $util.getSqlObj(req.query.tableName);
+            var obj = $util.getInfoObj(req.query.tableName);
+            var $sql = obj["sql"];
             connection.query($sql.queryAll, function(err, result) {
-                //对应shopIndex.html
-                // res.render('shopIndex', { content: '您当前现在在商店主页！' ,shopInfo:result});
+                //对应shopIndex.html             
                 connection.release();
-                $util.setHeader(res);
-                res.send(result);
+                if (req.query.tableName == "personyy") {
+                    var resNew = [];
+                    result.forEach(function(obj) {
+                        for (var key in obj) {
+                            if (obj.hasOwnProperty(key)) {
+                                if (key == "date") {
+                                    obj[key] = $util.dateFormat(obj[key]);
+                                }                         
+                            }
+                        }
+                        resNew.push(obj);
+                    }, this);
+                    res.render(obj['redirectPage'], { content: obj['content'] ,shopInfo:resNew});
+                } else {
+                    res.render(obj['redirectPage'], { content: obj['content'] ,shopInfo:result});
+                }
+                
             });
         });
     }
