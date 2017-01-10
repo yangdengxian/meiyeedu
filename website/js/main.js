@@ -178,7 +178,7 @@
 
 		    	var currentDate = new Date();
 		    	var newDays = [];
-		    	for (var i = 0; i < days.length; i++) {
+		    	/*for (var i = 0; i < days.length; i++) {
 		    		if (newDays.length <= 4) {
 						newDays.push({
 							"year": currentDate.getFullYear(),
@@ -188,8 +188,8 @@
                             "day": currentDate.getDay()
 						});
 					}
-		    	}
-				/*angular.forEach(days,function(number,index){
+		    	}*/
+				angular.forEach(days,function(number,index){
 					if (newDays.length <= 4 && (currentDate.getDay() == index)) {
 						newDays.push({
 							"year": currentDate.getFullYear(),
@@ -199,7 +199,7 @@
                             "day": currentDate.getDay()
 						});
 					}
-				});*/
+				});
 				return newDays;
 			},
 
