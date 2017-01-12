@@ -1,0 +1,46 @@
+.c0, .c6 {
+    background-color: #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    color: #8c8c8c;
+}
+
+.c0:hover, .c6:hover, .c1:hover, .c2:hover, .c3:hover, .c4:hover, .c5:hover {
+    background-color: #00B4E9;
+    color: #ffffff;
+
+}
+
+.c1, .c2, .c3, .c4, .c5 {
+    background-color: #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    color: #8c8c8c;
+}
+
+table, tr, td {
+    border-spacing: 0px;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+}
+
+html, body {
+
+    padding: 0px;
+    margin: 0px;
+    background-color: #0094DA;
+    font-family: "Microsoft YaHei", "SimSun", Arial, Helvetica, sans-serif;
+}
+
+.select_true {
+    background-color: #00B4E9;
+    color: #ffffff;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}

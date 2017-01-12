@@ -17,7 +17,7 @@
         $scope.selectItemData = [];
         $scope.selectPerItems = [];
         $scope.lastDay = [];
-        $scope.dataUrl = "http://127.0.0.1:3000/shops";
+        $scope.dataUrl = "http://192.168.0.106:3000/shops";
 
         $scope.selectDate = function (year, month, date, day, selectIndex) {
             //alert(month);

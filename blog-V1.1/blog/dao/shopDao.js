@@ -148,7 +148,18 @@ module.exports = {
                 //前端查询使用
                 if (!req.query.tableName) {
                     $util.setHeader(res);
-                    res.send(result);
+                    var resNew = [];
+                    result.forEach(function(obj) {
+                        for (var key in obj) {
+                            if (obj.hasOwnProperty(key)) {
+                                if (key == "date") {
+                                    obj[key] = $util.dateFormat(obj[key]);
+                                }                         
+                            }
+                        }
+                        resNew.push(obj);
+                    }, this);
+                    res.send(resNew);
                 } else {    //服务端查询使用
                     var obj = $util.getInfoObj(req.query.tableName);
                     if (req.query.tableName == "personyy") {
