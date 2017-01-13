@@ -2,82 +2,18 @@
 
 <html ng-app="preferential">
 <head>
-    <title>TKB</title>
+    <title>限时秒杀</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta content="width=device-width,user-scalable=no" name="viewport">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
+    <link rel="stylesheet" type="text/css" href="style/skin.css">
     <script type="text/javascript" src="js/jquery/jquery.js"></script>
     <script type="text/javascript" src="js/angular/angular.min.js"></script>
     <script type="text/javascript" src="js/angular/angular-route.min.js"></script>
-    <script>
-        var shareData = {
-            title: '限时秒杀! ',
-            desc: '限时秒杀！',
-            link: window.location.href,
-            imgUrl: 'http://tkb.meiyeedu.com/resources/lq/frreimg.png'
-        };
-
-        var appId = "wxd07a6525e298df6d";
-        var timestamp = "1480341284";
-        var nonceStr = "4d936382-90d1-45ab-ab99-b071fc0a6bf8";
-        var signature = "77bd5116d96f1fec89cad7f12e67083a7db894c8";
-
-
-        var id =1;
-    </script>
+    <script type="text/javascript" src="js/main/config.js"></script>
     <script type="text/javascript" src="js/main/main.js"></script>
-    <style>
-        .c0, .c6 {
-            background-color: #fff;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            border-radius: 5px;
-            color: #8c8c8c;
-        }
-
-        .c0:hover, .c6:hover, .c1:hover, .c2:hover, .c3:hover, .c4:hover, .c5:hover {
-            background-color: #00B4E9;
-            color: #ffffff;
-
-        }
-
-        .c1, .c2, .c3, .c4, .c5 {
-            background-color: #fff;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            border-radius: 5px;
-            color: #8c8c8c;
-        }
-
-        table, tr, td {
-            border-spacing: 0px;
-            padding: 0px;
-            margin: 0px;
-            border: none;
-        }
-
-        html, body {
-
-            padding: 0px;
-            margin: 0px;
-            background-color: #0094DA;
-            font-family: "Microsoft YaHei", "SimSun", Arial, Helvetica, sans-serif;
-        }
-
-        .select_true {
-            background-color: #00B4E9;
-            color: #ffffff;
-        }
-
-        a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-
-    </style>
 </head>
 <body ng-controller="preferentialCtrl">
 <table style="width: 100%;">
@@ -204,7 +140,7 @@
     </tr>
     </tbody>
 </table>
-<h2 style="text-align:center;color: #f5847c;"><a href="">@技术支持：397442655 1053522419 </a></h2>
-<h2 style="text-align:center;color: #f5847c;"><a href="http://192.168.0.106:3000/shops" target="view_window">后台管理系统</a></h2>
+<h2 style="text-align:center;color: #f5847c;">@技术支持：<a href="QQ:{{qq1}}">{{qq1}}</a> <a href="QQ:{{qq2}}">{{qq2}}</a></h2>
+<h2 style="text-align:center;color: #f5847c;"><a href="{{dataUrl}}" target="view_window">后台管理系统</a></h2>
 </body>
 </html>

@@ -17,7 +17,10 @@
         $scope.selectItemData = [];
         $scope.selectPerItems = [];
         $scope.lastDay = [];
-        $scope.dataUrl = "http://192.168.0.106:3000/shops";
+        $scope.dataUrl = Config.ipConfig;
+        //技术支持QQ
+        $scope.qq1 = Config.QQ1;
+        $scope.qq2 = Config.QQ2
 
         $scope.selectDate = function (year, month, date, day, selectIndex) {
             //alert(month);
@@ -48,7 +51,7 @@
 
             $http.get($scope.dataUrl + "/querySql", {
                 params: {
-                    sql: "select peritemID from checkhassalednum_v where shopId=" + id + " and date=" + currentDate.getTime()
+                    sql: "select peritemID from checkhassalednum_v where shopId=" + Config.id + " and date=" + currentDate.getTime()
                 }
             }).success(function (result) {
                 var countArr = $getData.countArrayVal(result);
@@ -151,9 +154,9 @@
 
         };
 
-        $http.get($scope.dataUrl + "/queryById", {params: {id: id}}).success(function (result) {
+        $http.get($scope.dataUrl + "/queryById", {params: {id: Config.id}}).success(function (result) {
             $scope.shop = result[0];
-            shareData.title = $scope.shop.name + "限时秒杀";
+            Config.shareData.title = $scope.shop.name + "限时秒杀";
             //descContent = shareTitle;
 
 
@@ -173,7 +176,7 @@
 
             // window.location.replace(qrcodeurl);
             //imgUrl=window.location.origin+"/"+urls+"resources/lq/frreimg.png";
-            shareData.imgUrl = "http://tkb.meiyeedu.com/resources/lq/frreimg.png";
+            Config.shareData.imgUrl = "http://tkb.meiyeedu.com/resources/lq/frreimg.png";
 
 
         });
@@ -183,7 +186,7 @@
         //$scope.preferential = {project0: ["", 0, 0, 0], project1: ["", 0, 0, 0], project2: ["", 0, 0, 0], project3: ["", 0, 0, 0]};
 
         $scope.getData = function () {
-            $http.get($scope.dataUrl + "/querySql", {params: {sql: "select * from preferinfo where shopId=" + id}}).success(function (result) {
+            $http.get($scope.dataUrl + "/querySql", {params: {sql: "select * from preferinfo where shopId=" + Config.id}}).success(function (result) {
                 //alert(reponse.status.massage);
                 if (result.length == 1) {
                     $scope.preferential = result[0];
@@ -361,7 +364,7 @@
      */
     preferential.config(function($routeProvider){
         $routeProvider.when("/website", {
-            templateUrl: "index_new.html",
+            templateUrl: "index.html",
             controller: "preferentialCtrl"
         }).otherwise({
             redirectTo: "/website"
