@@ -187,6 +187,7 @@ module.exports = {
             connection.query($sql.queryAll, function(err, result) {
                 //对应shopIndex.html             
                 connection.release();
+                var tableName = req.query.tableName ? req.query.tableName : "personyy";
                 if (req.query.tableName == "personyy") {
                     var resNew = [];
                     result.forEach(function(obj) {

@@ -12,7 +12,7 @@
 		$scope.selectPerItems = [];
 		$scope.lastDay = $getData.getDays();
 		$scope.preferential = {};
-		$scope.dataUrl = "http://127.0.0.1:3000/shops";
+		$scope.dataUrl = "http://192.168.0.106:3000/shops";
 
 		$http.get($scope.dataUrl + "/querySql?sql="+sqlShop).success(function(res){
 			var sqlPeritem = "",sqlPreferInfo = "";

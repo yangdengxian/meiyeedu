@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50620
 File Encoding         : 65001
 
-Date: 2017-01-13 00:34:00
+Date: 2017-01-13 22:33:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `peritem` (
   `count` int(10) DEFAULT NULL COMMENT '数量',
   `createDate` bigint(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='优惠内容表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='优惠内容表';
 
 -- ----------------------------
 -- Records of peritem
@@ -38,6 +38,11 @@ INSERT INTO `peritem` VALUES ('2', '1', '烟霏眉', '1280.00', '688.00', '20', 
 INSERT INTO `peritem` VALUES ('3', '1', '眉眼套餐', '2160.00', '880.00', '20', null);
 INSERT INTO `peritem` VALUES ('4', '1', '面部刮痧', '168.00', '38.00', '20', null);
 INSERT INTO `peritem` VALUES ('5', '1', '肩部调理', '198.00', '68.00', '20', null);
+INSERT INTO `peritem` VALUES ('6', '2', '线条眉', '880.00', '388.00', '20', null);
+INSERT INTO `peritem` VALUES ('7', '2', '烟霏眉', '1280.00', '688.00', '20', null);
+INSERT INTO `peritem` VALUES ('8', '2', '眉眼套餐', '2160.00', '880.00', '20', null);
+INSERT INTO `peritem` VALUES ('9', '2', '面部刮痧', '168.00', '38.00', '20', null);
+INSERT INTO `peritem` VALUES ('10', '2', '肩部调理', '198.00', '68.00', '20', null);
 
 -- ----------------------------
 -- Table structure for personyy
@@ -53,20 +58,19 @@ CREATE TABLE `personyy` (
   `isUse` varchar(10) COLLATE utf8_general_mysql500_ci DEFAULT '0' COMMENT '是否已用',
   `preItemID` int(10) DEFAULT NULL COMMENT '预约号,与优惠信息表关联',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='个人预约信息';
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='个人预约信息';
 
 -- ----------------------------
 -- Records of personyy
 -- ----------------------------
-INSERT INTO `personyy` VALUES ('1484064000000', '26', '杨登贤', '肩部调理', '68.00', '18792874121', '0', '5');
-INSERT INTO `personyy` VALUES ('1484064000000', '27', '杨登贤', '面部刮痧', '38.00', '18792874121', '0', '4');
-INSERT INTO `personyy` VALUES ('1484064000000', '28', '张三', '线条眉', '388.00', '15911029237', '0', '1');
-INSERT INTO `personyy` VALUES ('1484064000000', '29', '张三', '烟霏眉', '688.00', '15911029237', '0', '2');
-INSERT INTO `personyy` VALUES ('1484150400000', '30', '叶健勇', '线条眉', '388.00', '15611029237', '0', '1');
-INSERT INTO `personyy` VALUES ('1484150400000', '31', '周磊', '烟霏眉', '688.00', '17723456789', '0', '2');
-INSERT INTO `personyy` VALUES ('1484150400000', '32', '测试', '眉眼套餐', '880.00', '15911029273', '0', '3');
-INSERT INTO `personyy` VALUES ('1484150400000', '33', '叶剑英', '面部刮痧', '38.00', '15611029237', '0', '4');
-INSERT INTO `personyy` VALUES ('1484150400000', '34', '李奇', '肩部调理', '68.00', '18792874121', '0', '5');
+INSERT INTO `personyy` VALUES ('1484236800000', '35', '杨登贤', '线条眉', '388.00', '15911029237', '0', '6');
+INSERT INTO `personyy` VALUES ('1484236800000', '36', '杨登贤', '烟霏眉', '688.00', '15911029237', '0', '7');
+INSERT INTO `personyy` VALUES ('1484236800000', '37', '杨登贤', '眉眼套餐', '880.00', '15911029237', '0', '8');
+INSERT INTO `personyy` VALUES ('1484236800000', '38', '杨登贤', '面部刮痧', '38.00', '15911029237', '0', '9');
+INSERT INTO `personyy` VALUES ('1484236800000', '39', '杨登贤', '肩部调理', '68.00', '15911029237', '0', '10');
+INSERT INTO `personyy` VALUES ('1484323200000', '40', '张三', '线条眉', '388.00', '14657891234', '0', '6');
+INSERT INTO `personyy` VALUES ('1484323200000', '41', '张三', '烟霏眉', '688.00', '14657891234', '0', '7');
+INSERT INTO `personyy` VALUES ('1484323200000', '42', '张三', '眉眼套餐', '880.00', '14657891234', '0', '8');
 
 -- ----------------------------
 -- Table structure for preferinfo
@@ -80,12 +84,13 @@ CREATE TABLE `preferinfo` (
   `timeSection` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL COMMENT '优惠日（周内、周末）',
   `date` bigint(100) DEFAULT NULL COMMENT '优惠日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='优惠区间时刻表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci COMMENT='优惠区间时刻表';
 
 -- ----------------------------
 -- Records of preferinfo
 -- ----------------------------
 INSERT INTO `preferinfo` VALUES ('1', '1', '8', '18', 'other', null);
+INSERT INTO `preferinfo` VALUES ('2', '2', '8', '18', 'other', null);
 
 -- ----------------------------
 -- Table structure for shop
@@ -109,7 +114,7 @@ CREATE TABLE `shop` (
 -- Records of shop
 -- ----------------------------
 INSERT INTO `shop` VALUES ('1', '诺颜医疗美容工作室', '15911132988', '山西 运城', null, null, null, null, null, null);
-INSERT INTO `shop` VALUES ('2', '美妆工作室半永久眉眼唇', '13771927415', '苏州市吴中商城小商品20-10伊炫纹绣', null, null, null, null, null, null);
+INSERT INTO `shop` VALUES ('2', '美妆工作室半永久眉眼唇', '15713981923', '温塘金色阳光东门美妆工作室', null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for user

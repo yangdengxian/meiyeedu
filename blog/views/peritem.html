@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+   <head>
+        <title>美容优惠</title>
+
+        <meta charset="utf-8">
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+        <!-- css -->
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <link rel="stylesheet" type="text/css" href="/javascripts/jquery-easyui-1.4.4/themes/default/easyui.css">
+        <link rel="stylesheet" type="text/css" href="/javascripts/jquery-easyui-1.4.4/themes/icon.css">
+        <script type="text/javascript" src="/javascripts/jquery-easyui-1.4.4/jquery.min.js"></script>
+        <script type="text/javascript" src="/javascripts/jquery-easyui-1.4.4/jquery.easyui.min.js"></script>
+        <script type="text/javascript" src="/javascripts/jquery-easyui-1.4.4/locale/easyui-lang-zh_CN.js"></script>
+        <style type="text/css">
+          #line-chart {
+              height:300px;
+              width:800px;
+              margin: 0px auto;
+              margin-top: 1em;
+          }
+          .brand { font-family: georgia, serif; }
+          .brand .first {
+              color: #ccc;
+              font-style: italic;
+          }
+          .brand .second {
+              color: #fff;
+              font-weight: bold;
+          }
+      </style>
+
+   </head>
+   
+   <body class=""> 
+  
+    <div class="navbar">
+        <div class="navbar-inner">
+                <ul class="nav pull-right">
+                    
+                    <li><a href="#" class="hidden-phone visible-tablet visible-desktop" role="button">设置</a></li>
+                    <li id="fat-menu" class="dropdown">
+                        <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-user"></i> 张三
+                            <i class="icon-caret-down"></i>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" href="#">我的账号</a></li>
+                            <li class="divider"></li>
+                            <li><a tabindex="-1" class="visible-phone" href="#">设置</a></li>
+                            <li class="divider visible-phone"></li>
+                            <li><a tabindex="-1" href="sign-in.html">登出</a></li>
+                        </ul>
+                    </li>
+                    
+                </ul>
+                <a class="brand" href="/"><span class="second">后台管理系统</span></a>
+
+        </div>
+    </div>
+    
+
+    <div class="sidebar-nav">
+        
+        <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>优惠信息</a>
+        <ul id="dashboard-menu" class="nav nav-list collapse in">
+            <li class="active"><a href="/">商家店铺信息</a></li>
+            <li><a href="/peritem">优惠套餐信息</a></li>
+            <li><a href="/personyy">预约信息</a></li>
+            <li><a href="/preferinfo">优惠时间</a></li>
+        </ul>
+    </div>
+        
+    <div class="content">
+        
+        <div class="header">
+            <div class="stats">
+            <p class="stat"><span class="number">53</span>标签</p>
+            <p class="stat"><span class="number">27</span>任务</p>
+            <p class="stat"><span class="number">15</span>待处理</p>
+        </div>
+
+        <h1 class="page-title">美容优惠</h1>
+        </div>
+            <ul class="breadcrumb">
+            <li><a href="/">首页</a> <span class="divider">/</span></li>
+            <li class="active">商铺列表</li>
+        </ul>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div id="tb">
+                  <div>
+                      <a href="javascript:openUserAddDialog()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加用户</a>&nbsp;
+                      <a href="javascript:openUserModifyDialog()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">修改用户</a>&nbsp;
+                      <a href="javascript:deleteUser()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-remove'">删除用户</a>
+                  </div>
+                </div>
+                <table id="dg" class="easyui-datagrid" singleSelect="true" idField="id" rownumbers="true"
+                     url="/index/list?tableName=peritem" fit="true" toolbar="#tb" pagination="true">
+                    <thead>
+                      <tr>
+                          <th field="cb" checkbox="true" align="center" width="5%"></th>
+                          <th field="name" width="35%" align="center">美容类型</th>
+                          <th field="oPrice" width="25%" align="center">原价</th>
+                          <th field="cPrice" width="35%" align="center">现价</th>
+                          <th field="count" width="25%" align="center">数量</th>
+                          <th field="createDate" width="35%" align="center">地址</th>
+                      </tr>
+                    </thead>
+                </table>
+
+                <div class="easyui-dialog" id="dlg" style="width:480px;height:330px;padding:10px 10px;" closed="true" buttons="#dlg-buttons" data-options="" >
+                    <form action="" method="post" id="fm">
+                        <table cellspacing="8px" align="center">
+                            <tr>
+                                <input type='hidden' id="id" name="id" />
+                                <td>店&nbsp;&nbsp;名：</td>
+                                <td><input type="text" id="name" name="name"  required="true"/></td>
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>热&nbsp;&nbsp;线：</td>
+                                <td><input type="text" id="tel" name="tel"  required="true"/></td>
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>地&nbsp;&nbsp;址：</td>
+                                <td><input type="text" id="address" name="address"  required="true"/></td>
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+
+
+                <div id="dlg-buttons">
+                    <a href="javascript:saveUser();" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
+                    <a href="javascript:closeUserDialog();" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+                </div>
+                <footer>
+                    
+                </footer>
+            </div>
+    </div>
+    <script type="text/javascript">
+        var url="";
+        
+        function saveUser(){
+                $('#fm').form('submit', {
+                    url:url,
+                    onSubmit:function(){
+                        
+                    },
+                    success: function(result){
+                        debugger;
+                        var result = JSON.parse(result);
+                        if(result.success){
+                            $.messager.alert("系统提示","保存成功");
+                            $("#fm").form("reset");
+                            $("#dlg").dialog("close");
+                            $("#dg").datagrid("reload");
+                        }else{
+                            $.messager.alert("系统提示","保存失败");
+                            return;
+                        }
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+            }
+
+            function closeUserDialog(){
+                $("#dlg").dialog("close");
+                $("#fm").form("reset");
+            }
+
+            function deleteUser(){
+                var selectedrow=$("#dg").datagrid('getSelected');
+                if(selectedrow==null){
+                    $.messager.alert("系统提示","请选择要删除的数据！");
+                    return;
+                }
+                
+                var id=selectedrow.id;
+                $.messager.confirm("系统提示","您确认要删除这条数据吗？",function(r){
+                    if(r){
+                        $.post("/index/delete",{id:id},function(result){  //result直接返回Object，所以无需转换为json
+                            if(result.success){
+                                $.messager.alert("系统提示","数据已成功删除！");
+                                $("#dg").datagrid("reload");
+                            }else{
+                                $.messager.alert("系统提示","数据删除失败！");
+                            }
+                        },"json");
+                    }
+                });
+            }
+
+        function openUserAddDialog(){
+            $("#fm").form("reset"); //打开之前先清空数据
+            $("#dlg").dialog("open").dialog("setTitle","添加用户");
+            url = "/index/add";
+        }
+
+        function openUserModifyDialog(){
+            var selectedrow=$("#dg").datagrid('getSelected');
+            if(selectedrow ==null){
+                $.messager.alert("系统提示","请选择一条数据进行修改");
+                return;
+            }
+            
+            $("#dlg").dialog("open").dialog("setTitle","修改用户信息");
+            $('#fm').form('load',selectedrow);
+            url = "/index/edit";
+        }
+
+            function dispValue(row){
+                
+                $("#stuname").val(row.stuname);
+                $("#age").val(row.age);
+                $("#sex").val(row.sex);
+                $("#address").val(row.address);
+            }
+    </script>
+  </body>
+</html>
