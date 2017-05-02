@@ -10,7 +10,7 @@ var Config = {
 	nonceStr : "4d936382-90d1-45ab-ab99-b071fc0a6bf8",
 	signature : "77bd5116d96f1fec89cad7f12e67083a7db894c8",
 	id : 2,
-	ipConfig: "http://127.0.0.1:3000/shops",
+	ipConfig: "http://127.0.0.1:3000/",
 	QQ1: "397442655",
 	QQ2: "1053522419"
 };

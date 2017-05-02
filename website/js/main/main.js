@@ -49,7 +49,7 @@
                 $scope.selectPerItems = $scope.perItems;
             }
 
-            $http.get($scope.dataUrl + "/querySql", {
+            $http.get($scope.dataUrl + "/shops/querySql", {
                 params: {
                     sql: "select peritemID from checkhassalednum_v where shopId=" + Config.id + " and date=" + currentDate.getTime()
                 }
@@ -137,7 +137,7 @@
                     pDat.push(it);
                 }
             }
-            $http.get($scope.dataUrl + "/add", {
+            $http.get($scope.dataUrl + "/shops/add", {
                     params: {
                         json: angular.toJson(pDat),
                         tableName: "personyy"
@@ -154,7 +154,7 @@
 
         };
 
-        $http.get($scope.dataUrl + "/queryById", {params: {id: Config.id}}).success(function (result) {
+        $http.get($scope.dataUrl + "/shops/queryById", {params: {id: Config.id}}).success(function (result) {
             $scope.shop = result[0];
             Config.shareData.title = $scope.shop.name + "限时秒杀";
             //descContent = shareTitle;
@@ -186,7 +186,7 @@
         //$scope.preferential = {project0: ["", 0, 0, 0], project1: ["", 0, 0, 0], project2: ["", 0, 0, 0], project3: ["", 0, 0, 0]};
 
         $scope.getData = function () {
-            $http.get($scope.dataUrl + "/querySql", {params: {sql: "select * from preferinfo where shopId=" + Config.id}}).success(function (result) {
+            $http.get($scope.dataUrl + "/shops/querySql", {params: {sql: "select * from preferinfo where shopId=" + Config.id}}).success(function (result) {
                 //alert(reponse.status.massage);
                 if (result.length == 1) {
                     $scope.preferential = result[0];
@@ -233,7 +233,7 @@
                     }
 
 
-                    $http.get($scope.dataUrl + "/querySql", {
+                    $http.get($scope.dataUrl + "/shops/querySql", {
                             params: {
                                 sql: "select * from peritem where preferentialID = " + $scope.preferential.id
                             }
